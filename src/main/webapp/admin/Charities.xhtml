@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/template/master.xhtml">
+
+    <ui:define name="title">
+        <title>View Charities</title>
+    </ui:define>
+    <ui:define name="content">
+        <center>
+            <h:form>
+                <h:panelGrid columns="2" >
+                    <h:column>
+                        <h:outputLabel value="List of Charities" />
+                    </h:column>
+
+                    <h:column>
+                        <h:selectOneMenu  converter="#{charityConverter}"  >
+                            <f:selectItem itemLabel="No Charity Registered" itemValue="" itemDisabled="#{charitiesBean.charities.size()>0}" />
+                            <f:selectItems value="#{charitiesBean.charities}" var="charity" 
+                                           itemLabel=" #{charity.name}  (  #{charity.uniqueAbbriviation} )"  itemValue="#{charity}" />
+                            <f:ajax render="@form" event="valueChange" listener="#{charitiesBean.charityChanged}" />
+                        </h:selectOneMenu>
+
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="charity name" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value=" #{charitiesBean.activeCharity.name}  (  #{charitiesBean.activeCharity.uniqueAbbriviation} )" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="Charity creation Date" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value=" #{charitiesBean.activeCharity.creationDate}">
+                            <f:convertDateTime pattern="d-M-yyyy" />
+                        </h:outputLabel>
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="Charity Description" />
+                    </h:column>
+                    <h:column>
+                        <h:inputTextarea cols="40" value=" #{charitiesBean.activeCharity.desciption}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="Charity Credit" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value=" #{charitiesBean.activeCharity.credit}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="Causes List" />
+                    </h:column>
+                    <h:column>
+                        <h:selectOneMenu  converter="#{causeConverter}"  >
+                            <f:selectItem itemLabel="No Charities Registered" itemValue="" itemDisabled="#{charitiesBean.causes.size()>0}" />
+
+                            <f:selectItems value="#{charitiesBean.causes}" var="cause" 
+                                           itemLabel=" #{cause.name}"  itemValue="#{cause}" />
+                            <f:ajax render="@form" event="valueChange" listener="#{charitiesBean.causeChanged}" />
+                        </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="total cause fundrising" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{charitiesBean.causeFundriasingResult.increaseRatio()}" />
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="cause fundrising ratio of charity fundrising" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{charitiesBean.causeFundriasingResult.causeRaising} ">
+                            <f:convertNumber currencyCode="USD" type="currency" />
+                        </h:outputLabel>
+                    </h:column>
+
+
+
+                </h:panelGrid>
+            </h:form>
+        </center>
+    </ui:define>
+</ui:composition>

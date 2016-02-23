@@ -1,0 +1,179 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/template/master.xhtml">
+
+    <ui:define name="title">
+        <title>Donate</title>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <center>
+            <h:form>
+                <p:growl />
+                <h:panelGrid columns="2">
+
+                    <h:column>
+                        <h:outputLabel value="activity" />
+                    </h:column>
+                    <h:column> 
+                        <h:selectOneMenu  converter="#{activityConverter}" value="#{donationHandlerBean.donation.activity}" required="true" requiredMessage="Required message is required" >
+                            <f:selectItem itemLabel="No Activity Registered" itemValue="" itemDisabled ="#{donationHandlerBean.allDonatableActivities.size()>0}" />
+                            <f:selectItems value="#{donationHandlerBean.allDonatableActivities}" var="activity" 
+                                           itemLabel="#{activity.activityName}" itemValue="#{activity}" />
+                            <f:ajax render="@form" execute="@this"  event="valueChange" listener="#{donationHandlerBean.activityChanged}" />
+                        </h:selectOneMenu>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="creator" />
+                    </h:column>
+                    <h:column>
+                        <h:commandLink rendered="#{donationHandlerBean.donation.activity.creator!=null}" value=" #{donationHandlerBean.donation.activity.creator.firstName} #{donationHandlerBean.donation.activity.creator.lastName} ( #{  donationHandlerBean.donation.activity.creator.email} )">
+                            <f:ajax render=":fundriserData" onevent="function(data){if (data.status === 'success'){ PF('fundriserDialog').show();} }" />
+                        </h:commandLink>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="activity description " />
+                    </h:column>
+
+                    <h:column>
+                        <h:inputTextarea readonly="true" cols="40" value=" #{donationHandlerBean.donation.activity.description}"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputHidden  />
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="#{donationHandlerBean.donation.activity.activityCreationData}" />
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="Cause " />
+                    </h:column>
+
+                    <h:column>
+                        <h:commandLink value=" #{donationHandlerBean.donation.activity.cause.name}">
+                            <f:ajax render=":causeData" onevent="function(data){if (data.status === 'success'){ PF('CauseDialog').show();} }" />
+                        </h:commandLink>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="Cause description" />
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value=" #{donationHandlerBean.donation.activity.cause.description}"/>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="donation amount" />
+                    </h:column>
+
+                    <h:column>
+                        <h:inputText value="#{donationHandlerBean.donation.amout}" required="true" requiredMessage="Donation amout is required" validatorMessage="Donation amount should be between $1 and  $500 at time" >
+                            <f:validateDoubleRange minimum="0" maximum="500" />
+                        </h:inputText>
+                    </h:column>
+
+                    <center><h:commandButton value="donate" >
+                            <f:ajax execute="@form" listener="#{donationHandlerBean.donate()}" render="@form" />
+                        </h:commandButton></center>
+
+                </h:panelGrid>
+            </h:form>
+        </center>
+
+
+        <p:dialog widgetVar="fundriserDialog" id="dialog"  modal="true" header="Activity Creator Details" resizable="false" closeOnEscape="true" >
+            <h:form id = "fundriserData" >
+                <h:panelGrid columns="2">
+                    <h:column>
+                        <h:outputText value="Activity creator first name :" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{donationHandlerBean.donation.activity.creator.firstName}" />  
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Activity creator last name :" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{donationHandlerBean.donation.activity.creator.lastName}" />  
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Activity creator email:     " />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{donationHandlerBean.donation.activity.creator.email}" />  
+                    </h:column>
+                </h:panelGrid>
+
+
+            </h:form>
+
+        </p:dialog>
+
+        <p:dialog widgetVar="CauseDialog" id="CauseDialog"  modal="true" header="Cause Details" resizable="false" closeOnEscape="true" >
+            <h:form id = "causeData" >
+                <h:panelGrid columns="2">
+                    <h:column>
+                        <h:outputText value="Cause Name :" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{fundraiserBean.activeActivity.cause.name}" />  
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Cause Description :" />
+                    </h:column>
+                    <h:column>
+                        <h:inputTextarea readonly="true" value="#{fundraiserBean.activeActivity.cause.description}" />  
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Cause Creation Date     " />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{fundraiserBean.activeActivity.cause.causeCreationDate}" >
+                            <f:convertDateTime pattern="d-M-yyyy" />
+                        </h:outputLabel>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Cause Charity  Name   " />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{fundraiserBean.activeActivity.cause.charity.name}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="Cause Charity  Abbreviation   " />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{fundraiserBean.activeActivity.cause.charity.uniqueAbbriviation}" />
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Cause Charity  Description   " />
+                    </h:column>
+                    <h:column>
+                        <h:inputTextarea readonly="true" value="#{fundraiserBean.activeActivity.cause.charity.desciption}" />  
+                    </h:column>
+
+
+                </h:panelGrid>
+
+
+            </h:form>
+
+        </p:dialog>
+
+
+
+    </ui:define>
+</ui:composition>

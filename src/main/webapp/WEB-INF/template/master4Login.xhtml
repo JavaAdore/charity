@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<ui:insert name="title">Default Title</ui:insert>
+
+
+	<link rel="shortcut icon" type="image/png"
+		href="#{request.contextPath}/resources/images/logo.png" />
+
+	<h:outputStylesheet library="css" name="style.css" />
+        
+        <ui:insert name="style"/>
+
+
+</h:head>
+<f:view contentType="text/html">
+
+	<h:body dir="#{loc.dir}" style="padding:0px; margin:0px;">
+		<div style="height: 15%; background-color: #232323;">
+			<ui:include src="header4Login.xhtml" />
+		</div>
+		<br />
+		<div style="height: 80%; min-height: 500px;">
+			<ui:insert name="content">Default Content</ui:insert>
+		</div>
+		<div
+			style="height: 5%; text-align: center; color: white;">
+			<ui:include src="footer.xhtml" />
+		</div>
+
+	</h:body>
+	<ui:debug rendered="true" />
+</f:view>
+</html>

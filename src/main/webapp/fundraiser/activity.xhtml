@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/template/master.xhtml">
+
+    <ui:define name="title">
+        <title>Create Activity</title>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="growlForm">
+
+        </h:form>
+        <center>
+            <h:form>
+                <p:growl/>
+                <h:panelGrid columns="2">
+                    <h:column>
+                        <h:outputLabel value="charity" />
+                    </h:column>
+                    <h:column>
+
+                        <h:selectOneMenu  converter="#{charityConverter}" requiredMessage="Charity is required"  >
+                            <f:selectItem itemLabel="Select Charity" itemValue=""    itemDisabled="#{activityBeanHandler.charities.size()>0}" />
+                            <f:selectItems value="#{activityBeanHandler.charities}" var="charity" 
+                                           itemLabel="#{charity.uniqueAbbriviation}" itemValue="#{charity}" />
+
+                            <f:ajax render="causes" execute="@this"  event="valueChange" listener="#{activityBeanHandler.charityChanged}" />
+                        </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="Cause" />
+                    </h:column>
+                    <h:column>
+                        <h:selectOneMenu id="causes" value="#{activityBeanHandler.activity.cause}" converter="#{causeConverter}" required="true" requiredMessage="Cause is required" >
+                            <f:selectItem itemLabel="Select Cause" itemValue="" itemDisabled="#{activityBeanHandler.causes.size()>0}" />
+                            <f:selectItems value="#{activityBeanHandler.causes}" var="cause" 
+                                           itemLabel="#{cause.name}" itemValue="#{cause}" />
+                        </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="activityName" />
+                    </h:column>
+                    <h:inputText value="#{activityBeanHandler.activity.activityName}" required="true" requiredMessage="Activity name is required"  validatorMessage ="activity name should be between 1 and 25 characters"  >
+                        <f:validateLength minimum="1" maximum="25"/>
+                    </h:inputText>
+
+                    <h:column>
+                        <h:outputLabel value="activity Description" />
+                    </h:column>
+                    <h:column>
+                        <h:inputTextarea style="max-width: 300px" cols="50" value="#{activityBeanHandler.activity.description}" validatorMessage="Activity description should not increase 1000 character">
+                            <f:validateLength maximum="1000" />
+                        </h:inputTextarea>
+                    </h:column>
+                    <h:column></h:column>
+                    <h:column>
+                        <h:commandButton   value="create Activity" style="min-width:150px"   >
+                            <f:ajax listener="#{activityBeanHandler.addActivity()}" execute="@form" render="@form"  />
+                        </h:commandButton>
+                    </h:column>
+
+
+                </h:panelGrid>
+            </h:form>
+        </center>
+    </ui:define>
+</ui:composition>

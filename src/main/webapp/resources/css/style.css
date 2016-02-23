@@ -1,0 +1,69 @@
+body {
+	background-image: url(#{request.contextPath}/resources/images/bg.png)!important;
+		
+}
+
+
+.loginPasswordGrid tr, .loginPasswordGrid td{
+	border-style: none !important;
+}
+
+#menubarForm .mainMenuBar{
+	background-color: #232323 !important;
+	color: white !important;
+}
+
+#menubarForm .ui-menu,#menubarForm .ui-menubar,#menubarForm .ui-menu-child {
+    background: #232323 !important;
+    height: 35px;
+    font-size: 15px;
+    
+}
+#menubarForm .ui-menuitem-text{
+	color: white !important;
+}
+
+#menubarForm .ui-corner-all {
+    border-radius: 6px 6px 6px 6px !important;
+}
+
+#menubarForm .ui-menu-list {
+    position:static;
+}
+
+#menubarForm .ui-menu .ui-menu-list .ui-menuitem {
+    border:none;
+}
+
+#menubarForm .ui-menu .ui-menu-list .ui-widget-header {
+    clear:both;
+    float:left;
+    width:98%;
+    font-size:12px;
+    margin:1px 0;
+    background-color: yellow !important;
+}
+#menubarForm ul li.ui-menuitem-active>a{
+    background-image: none !important;
+    background-color: transparent !important;  
+    color: gray  !important; 
+    
+}
+
+#menubarForm li ul li.ui-menuitem-active>a{
+    background-image: none !important;
+    background-color:black !important;  
+    color: white  !important;  
+}
+
+#menubarForm li ul li.ui-menuitem-active>a .ui-menuitem-text{
+	color: #01ADEF !important;
+}
+#menubarForm ul li.ui-menuitem-active>a .ui-menuitem-text{
+	color: yellow !important;
+}
+
+#menubarForm .ui-menu-list {
+position: absolute;
+}
+input,select{min-width: 300px !important;}

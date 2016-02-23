@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/template/master.xhtml">
+
+	<ui:define name="title">
+		<title>Add New Admin</title>
+	</ui:define>
+
+	<ui:define name="content">
+        <h:form id="growl">
+            <p:growl/>
+        </h:form>
+            <center>
+        <h:form>
+            <p:growl/>
+            <h:panelGrid>
+                <h:column>
+                    <h:outputLabel value="First Name" />
+                </h:column>
+                <h:column>
+                    <h:inputText value="#{addAdminBean.admin.firstName}" required="true" requiredMessage="First name is required" validatorMessage="First Name should be between 2 and 15 characters" >
+                        <f:validateRegex pattern="^[A-Za-z0-9_-]{2,15}$" />
+                    </h:inputText>
+                </h:column>
+
+                <h:column>
+                    <h:outputLabel value="Last Name" />
+                </h:column>
+                <h:column>
+                    <h:inputText value="#{addAdminBean.admin.lastName}" required="true" requiredMessage="Last name is required" validatorMessage="First Name should be between 2 and 15 characters">
+                        <f:validateRegex pattern="^[A-Za-z0-9_-]{2,15}$" />
+                    </h:inputText>
+                </h:column>
+
+                <h:column>
+                    <h:outputLabel value="email" />
+                </h:column>
+                <h:column>
+                    <h:inputText id="email" required="true" label="email" size="40" title="please enter email address"
+                                 requiredMessage="Please enter your email address."
+                                 validatorMessage="Invalid email format"
+                                 value="#{addAdminBean.admin.email}">
+                        <f:validateRegex
+                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        <f:ajax event="blur" listener="#{addAdminBean.checkEmail()}" execute="@this" render=":growl"  />
+                    </h:inputText>
+                </h:column>
+                <h:column>
+                    <h:outputLabel value="password" />
+                </h:column>
+                <h:column>
+                    <h:inputSecret value="#{addAdminBean.admin.password}" required="true" requiredMessage="Password is required" validatorMessage="Password should be between 6 and 25 characters" >
+                        <f:validateLength minimum="6"  maximum="25" />
+                    </h:inputSecret>
+                </h:column> 
+                <h:column>
+                    <h:outputLabel value="confirm password" />
+                </h:column>
+                <h:column>
+                    <h:inputSecret value="#{addAdminBean.admin.confirmPassword}" required="true"  requiredMessage="Confirm password is required" validatorMessage="Password should be between 6 and 25 characters">
+                        <f:validateLength minimum="6"  maximum="25" />
+                    </h:inputSecret>
+                </h:column>
+
+            </h:panelGrid>
+            <h:commandButton value="Add New Admin" >
+                <f:ajax execute="@form" listener="#{addAdminBean.addNewAdmin()}" render="@form" />
+            </h:commandButton>
+        </h:form>
+        </center>
+        </ui:define>
+</ui:composition>
+        

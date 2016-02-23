@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    
+    <navigation-rule>
+        <from-view-id>login.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{loginBean.login()}</from-action>
+            <from-outcome>volunteer</from-outcome>
+            <to-view-id>activity.xhtml</to-view-id>
+            <redirect>true</redirect>
+                
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{loginBean.login()}</from-action>
+            <from-outcome>wrongUserNameOrPassword</from-outcome>
+            <to-view-id>login.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>registration</from-outcome>
+            <to-view-id>Registration.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>	
+    
+    
+    
+    <navigation-rule>
+        <from-view-id>Registration.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{registrationHandlerBean.register()}</from-action>
+            <from-outcome>fundriserHome</from-outcome>
+            <to-view-id>fundraiser/Home.xhtml</to-view-id>
+            <redirect>true</redirect>
+                
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{registrationHandlerBean.register()}</from-action>
+            <from-outcome>charityHome</from-outcome>
+            <to-view-id>charity/Home.xhtml</to-view-id>
+            <redirect>true</redirect>
+                
+        </navigation-case>
+    </navigation-rule>	
+    
+    <navigation-rule>
+        <from-view-id>Registration.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{registrationHandlerBean.register()}</from-action>
+            <from-outcome>fundriserHome</from-outcome>
+            <to-view-id>fundraiser/Home.xhtml</to-view-id>
+            <redirect>true</redirect>
+                
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{registrationHandlerBean.register()}</from-action>
+            <from-outcome>charityHome</from-outcome>
+            <to-view-id>charity/Home.xhtml</to-view-id>
+            <redirect>true</redirect>
+                
+        </navigation-case>
+    </navigation-rule>	
+    
+    
+    
+</faces-config>

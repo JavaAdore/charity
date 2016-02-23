@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/template/master.xhtml">
+
+    <ui:define name="title">
+        <title>Dashboard</title>
+    </ui:define>
+
+    <ui:define name="content">
+        <center>
+            <h:form>
+                <h:panelGrid columns="2" >
+                    <h:column>
+                        <h:outputLabel value="cause" />
+                    </h:column>
+                    <h:column>
+                        <h:selectOneMenu id="causes"  converter="#{causeConverter}"  >
+                            <f:selectItem itemLabel="No Charities Registered" itemValue="" itemDisabled="#{charityHomeBean.charityCauses.size()>0}" />
+
+                            <f:selectItems value="#{charityHomeBean.charityCauses}" var="cause" 
+                                           itemLabel="#{cause.name}" itemValue="#{cause}" />
+                            <f:ajax render="@form" event="valueChange" execute="@this" listener="#{charityHomeBean.causeChanged}" />
+                        </h:selectOneMenu>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="total cause fundraising " />
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="#{charityHomeBean.causeFundriasingResult.causeRaising}" >
+                            <f:convertNumber currencyCode="USD" type="currency" />
+
+                        </h:outputLabel>
+                    </h:column>
+
+
+                    <h:column>
+                        <h:outputLabel value="cause fundrising ratio  " />
+                    </h:column>
+
+                    <h:column>
+                        <h:outputLabel value="#{charityHomeBean.causeFundriasingResult.increaseRatio()}" />
+                    </h:column>
+                </h:panelGrid>
+            </h:form>
+        </center>
+
+    </ui:define>
+</ui:composition>

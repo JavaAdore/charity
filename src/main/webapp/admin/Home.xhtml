@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/template/master.xhtml">
+
+    <ui:define name="title">
+        <title>Dashboard</title>
+    </ui:define>
+
+    <ui:define name="content">
+        <center>
+            <h:panelGrid columns="2" styleClass="min-height"  >
+                <h:column  >
+                    <h:outputLabel value="Fundrisers"/>
+                    <hr/>
+
+                    <ui:include src="Fundraisers.xhtml" />
+                </h:column>
+                <h:column>
+                    <h:outputLabel value="Charities"/>
+                    <hr/>
+                    <ui:include src="Charities.xhtml" />
+                </h:column>
+            </h:panelGrid>
+        </center>
+
+    </ui:define>
+</ui:composition>

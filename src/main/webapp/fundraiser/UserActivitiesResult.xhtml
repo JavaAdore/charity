@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/template/master.xhtml">
+
+    <ui:define name="title">
+        <title>View My Activities</title>
+    </ui:define>
+
+    <ui:define name="content">
+
+        #{activityResultBean.init()}
+        <center>
+
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:column>
+                        <h:outputText value="My Activity" />
+
+                    </h:column>
+                    <h:column>
+                        <h:selectOneMenu  converter="#{activityConverter}" required="true"  >
+                            <f:selectItem itemLabel="Select Activity" itemValue="" itemDisabled="#{activityResultBean.usersActivities.size()>0}" />
+                            <f:selectItems value="#{activityResultBean.usersActivities}" var="activity" 
+                                           itemLabel="#{activity.activityName}" itemValue="#{activity}" />
+                            <f:ajax render="@form" execute="@this"  event="valueChange" listener="#{activityResultBean.activityChanged}" />
+                        </h:selectOneMenu>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Activity name" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{activityResultBean.activityFundraisingResult.activityName}" />
+
+
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="activity caused increased " />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{activityResultBean.activityFundraisingResult.raisByActivity}">
+                            <f:convertNumber currencyCode="USD" type="currency" />
+                        </h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="Activity fundraising ratio of targeted cause" /> 
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{activityResultBean.activityFundraisingResult.increaseRatio()}" />
+                    </h:column>
+
+                </h:panelGrid>
+            </h:form>
+        </center>
+    </ui:define>
+</ui:composition>

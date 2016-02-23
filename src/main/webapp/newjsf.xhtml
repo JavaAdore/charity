@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <form action="j_security_check" name="loginForm" method="post" >
+            <p:growl />
+            <center>
+                <h:panelGrid columns="2" >
+                    <h:column>
+                        <h:outputLabel value="Email" />
+                    </h:column>
+                    <h:column>
+                        <input type="text" name="j_username"  />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="Password" />
+                    </h:column>
+                    <h:column>
+                        <input type="password" name="j_password"  />
+                    </h:column>
+                    <h:column>
+                        <input type="hidden"  />
+                    </h:column>
+                    <h:column>
+                        <center>
+                            <input type="submit" value="login" />
+                            <input type="reset" value="reset" />
+                        </center>
+                    </h:column>
+                </h:panelGrid>
+            </center>
+
+        </form>
+    </h:body>
+</html>
+

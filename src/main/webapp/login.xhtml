@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/master4Login.xhtml">
+
+    <ui:define name="title">
+        <title>Login</title>
+    </ui:define>
+
+    <ui:define name="content">
+        <center>
+            <div style="font-family: fantasy; top:50%;">
+
+                <form action="j_security_check" name="loginForm" method="post" >
+                    <p:growl />
+                    <center>
+                        <h:panelGrid columns="2" >
+                            <h:column>
+                                <h:outputLabel value="Email" />
+                            </h:column>
+                            <h:column>
+                                <input type="text" name="j_username"  />
+                            </h:column>
+                            <h:column>
+                                <h:outputLabel value="Password" />
+                            </h:column>
+                            <h:column>
+                                <input type="password" name="j_password"  />
+                            </h:column>
+                            <h:column>
+                                <input type="hidden"  />
+                            </h:column>
+                            <h:column>
+                                <center>
+                                    <input type="submit" value="login" />
+                                    <a href="Registration.xhtml" >Registration</a>
+                                </center>
+                            </h:column>
+                        </h:panelGrid>
+                    </center>
+
+                </form>
+            </div>
+        </center>
+    </ui:define>
+
+</ui:composition>

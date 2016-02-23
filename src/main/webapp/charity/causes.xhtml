@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/template/master.xhtml">
+
+    <ui:define name="title">
+        <title>Dashboard</title>
+    </ui:define>
+
+    <ui:define name="content">
+        <center>
+            <h:form prependId="false" id="causesForm">
+                <p:growl/>
+                <h:selectOneMenu  converter="#{causeConverter}" value="#{causesHandlerBean.activeCause}" rendered="#{causesHandlerBean.causes.size()>0}"  >
+                    <f:selectItems value="#{causesHandlerBean.causes}" var="cause" 
+                                   itemLabel="#{cause.name}" itemValue="#{cause}" />
+                    <f:ajax render="@form :dialogForm" execute="@this"  event="valueChange" listener="#{causesHandlerBean.activeCauseChanged}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Edit" rendered="#{causesHandlerBean.activeCause !=null}" >
+                    <f:ajax  render=":dialogForm " onevent="function(data){if (data.status === 'success'){ PF('dialog').show()} }"/>
+                </h:commandButton>
+
+                <h:panelGrid columns="2" rendered="#{causesHandlerBean.activeCause !=null}" >
+                    <h:column> 
+                        <h:outputLabel value="Cause Name" />
+                    </h:column>
+                    <h:column>    				
+                        <h:outputLabel value="#{causesHandlerBean.activeCause.name}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="amount" />
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="#{causesHandlerBean.activeCause.totalAmount}" >
+                            <f:convertNumber currencyCode="USD" type="currency" />
+                        </h:outputLabel>
+                    </h:column>
+
+                </h:panelGrid>
+                <h:commandButton value="Add New Cause"    >
+                    <f:ajax  render=":dialogForm "  listener="#{causesHandlerBean.initiateNewCause()}"  onevent="function(data){if (data.status === 'success'){ PF('dialog').show()} }"/>
+                </h:commandButton>
+            </h:form> 
+        </center>
+        <p:dialog widgetVar="dialog" id="dialog"  modal="true" header="Add or Update Cause" resizable="false" closeOnEscape="true" >
+            <h:form id = "dialogForm" >
+                <h:panelGrid columns="2">
+                    <h:column>
+                        <h:outputLabel value="Cause Name" />
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{causesHandlerBean.activeCause.name}" required="true" requiredMessage="Cause name is required" validatorMessage="Cause name should be between 2 and 25 characters">
+                            <f:validateLength minimum="2" maximum="25" />
+                        </h:inputText>
+                    </h:column>
+                    <h:column>
+                        <h:outputLabel value="description" />
+                    </h:column>
+                    <h:column>
+
+                        <h:inputTextarea value="#{causesHandlerBean.activeCause.description}" style="max-height:50px;max-height:50px" validatorMessage="description shoud not exceed 1000 characters" >
+                            <f:validateLength maximum="1000" />
+                        </h:inputTextarea>
+                    </h:column>
+                    <h:column> 
+                        <h:commandLink    value="#{causesHandlerBean.activeCause.id==null?'Add':'Update'}" actionListener="#{causesHandlerBean.addOrUpdateCause()}"  >
+                            <f:ajax  execute="@form " onevent="function(data){if (data.status === 'success'){ PF('dialog').hide();} }" render="@all"   />
+                        </h:commandLink>
+                    </h:column>
+                </h:panelGrid>
+
+
+            </h:form>
+
+        </p:dialog>
+
+
+    </ui:define>
+</ui:composition>
